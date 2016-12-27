@@ -1,0 +1,41 @@
+ostream &operator << (ostream &o, const Term &t){
+    if (t.type == plus) o<<"PLUS";
+    else if (t.type == minus) o<<"MINUS";   // reference is ambiguous 
+    else if (t.type == mul) o<<"MULTIPLY";
+    else if (t.type == div) o<<"divide";
+    else {
+        o <<t.num;
+    }
+    return o;
+}
+//SOlution :: it seems using captibal will avoid ambiguity 
+
+Infix to Post fix --> such as (6+2)*5-8/4 to 62+5*8/4- 
+1. rule first multiply and divide then other operation 
+2. paranthesis validation (including what's inside the par is calculated first )
+
+
+while there are more characters in the input
+{
+Read next symbol ch in the given infix expression.
+If ch is an operand put it on the output.
+If ch is an operator i.e.* , /, +, -, or (
+{
+If stack is empty push ch onto stack;
+Else check the item op at the top of the stack;
+while (more items in the stack &&
+priority(ch) <= priority (op) )
+{
+pop op and append it to the output, provided it
+is not an open parenthesis
+op = top element of stack
+}
+push ch onto stack
+}
+If ch is right parenthesis ‘)’
+Pop items from stack until left parenthesis
+reached
+Pop left parenthesis and discard both left
+and right parenthesis
+}/* now no more characters in the infix expression*/
+Pop remaining items in the stack to the output.
